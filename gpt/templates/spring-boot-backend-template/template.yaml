@@ -1,31 +1,33 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
+# some metadata about the template itself
 metadata:
-  name: spring-boot-backend-template
-  title: Create a Spring Boot Backend application with a CI pipeline
-  description: Create a starter Spring Boot backend application with a CI pipeline
+  name: spring-boot-on-openshift-template
+  title: Create a Spring Boot app and deploy it on OpenShift with a CI/CD pipeline
+  description: Create a Spring Boot app and deploy it on OpenShift with a CI/CD pipeline
   tags:
     - recommended
     - spring-boot
     - java
     - maven
 spec:
-  owner: janus-authors
+  owner: nikhil
   system: janus-idp
   type: service
-
+ # these are the steps which are rendered in the frontend with the form input
   parameters:
     - title: Provide information about the new component
       required:
-        - githubOrg
+        - orgName
         - repoName
         - owner
-        - system
         - port
+        - componentId
       properties:
-        githubOrg:
-          title: GitHub Organization
+        orgName:
+          title: Organization Name
           type: string
+          default: development
         repoName:
           title: Repository Name
           type: string
@@ -42,40 +44,44 @@ spec:
               kind:
                 - Group
                 - User
-        system:
-          title: System
-          type: string
-          ui:field: EntityPicker
-          ui:options:
-            catalogFilter:
-              kind:
-                - System
         port:
           title: Port
           type: number
           default: 8080
           description: Override the port exposed for the application
+        componentId:
+          title: Name
+          type: string
+          description: Unique name of the component
+          default: my-spring-boot-app
+          ui:field: EntityNamePicker
+          maxLength: 23
     - title: Provide information about the Java metadata
       required:
         - groupId
         - artifactId
-        - javaPackageName
+        - javaPackage
       properties:
         groupId:
           title: Group ID
           type: string
-          default: io.janus
-          description: Maven Group ID eg (io.janus)
+          default: nikhil.spring
+          description: Maven Group ID eg (pl.piomin)
         artifactId:
           title: Artifact ID
           type: string
-          default: spring-boot-app
+          default: myspring-boot-on-openshift
           description: Maven Artifact ID
-        javaPackageName:
+        javaPackage:
           title: Java Package Namespace
           type: string
-          default: io/janus/spring-boot-app
+          default: org/nikhil/spring
           description: Name for the Java Package (ensure to use the / character as this is used for folder structure) should match Group ID and Artifact ID
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this website is for.
+          default: sample srping app
     - title: Provide information about the CI method
       required:
         - ci
@@ -84,27 +90,21 @@ spec:
           title: Select a CI method
           type: string
           description: This action will create a CI pipeline for your application based on chosen method
-          default: ../../scaffolder-skeletons/github-actions-skeleton/
+          default: ../../skeletons/ci/tekton/
           enum:
-            - ../../scaffolder-skeletons/github-actions-skeleton/
-            - ../../scaffolder-skeletons/tekton-skeleton/
+            - ../../skeletons/ci/tekton/
           enumNames:
-            - GitHub Action
             - Tekton
       dependencies:
         ci:
           oneOf:
-            - properties:
-                # Show no extra properties when GitHub Actions is selected
-                ci:
-                  const: ../../scaffolder-skeletons/github-actions-skeleton/
             - required:
                 - imageRepository
                 - namespace
                 - imageUrl
               properties:
                 ci:
-                  const: ../../scaffolder-skeletons/tekton-skeleton/
+                  const: ../../skeletons/ci/tekton/
                 imageRepository:
                   title: Select a registry
                   type: string
@@ -123,6 +123,29 @@ spec:
                   title: Namespace
                   type: string
                   description: The namespace for deploying resources
+    - title: Application repository Information
+      required:
+        - repo
+      properties:
+        repo:
+          title: Repository Location
+          type: object
+          properties:
+            host:
+              title: Repo Host
+              type: string
+              description: Your SCM host
+              default: gitlab.com
+              enum:
+                - gitlab.com
+            owner:
+              title: Repo Owner
+              type: string
+              description: Your SCM host organization/group
+              default: development
+              enum:
+                - development
+ # here's the steps that are executed in series in the scaffolder backend
   steps:
     - id: sourceCodeTemplate
       name: Generating the Source Code Component
@@ -130,10 +153,9 @@ spec:
       input:
         url: ./skeleton
         values:
-          githubOrg: ${{ parameters.githubOrg }}
+          orgName: ${{ parameters.orgName }}
           repoName: ${{ parameters.repoName }}
-          owner: ${{ parameters.owner }}
-          system: ${{ parameters.system }}
+          owner: ${{ user.entity.metadata.name }}
           applicationType: api
           description: ${{ parameters.description }}
           namespace: ${{ parameters.namespace }}
@@ -144,20 +166,21 @@ spec:
           ci: ${{ parameters.ci }}
           groupId: ${{ parameters.groupId }}
           artifactId: ${{ parameters.artifactId }}
-          javaPackageName: ${{ parameters.javaPackageName }}
+          javaPackage: ${{ parameters.javaPackage }}
+          host: ${{ parameters.repo.host }}
+          destination: ${{ parameters.repo.owner }}/${{ parameters.componentId }}
+          sourceControl: gitlab.com
 
     - id: ciTemplate
       name: Generating the CI Component
       action: fetch:template
       input:
         url: ${{ parameters.ci }}
-        copyWithoutTemplating:
-          - .github/workflows/
+        copyWithoutTemplating: []
         values:
-          githubOrg: ${{ parameters.githubOrg }}
+          orgName: ${{ parameters.orgName }}
           repoName: ${{ parameters.repoName }}
           owner: ${{ parameters.owner }}
-          system: ${{ parameters.system }}
           applicationType: api
           description: ${{ parameters.description }}
           namespace: ${{ parameters.namespace }}
@@ -168,18 +191,22 @@ spec:
           ci: ${{ parameters.ci }}
           groupId: ${{ parameters.groupId }}
           artifactId: ${{ parameters.artifactId }}
-          javaPackageName: ${{ parameters.javaPackageName }}
+          javaPackage: ${{ parameters.javaPackage }}
+          host: ${{ parameters.repo.host }}
+          destination: ${{ parameters.repo.owner }}/${{ parameters.componentId }}
+          sourceControl: gitlab.com
 
     - id: catalogTemplate
       name: Generating the Catalog Info Component
       action: fetch:template
       input:
-        url: ../../scaffolder-skeletons/catalog-info-skeleton/
+        url: ../../skeletons/catalog-info/
         values:
-          githubOrg: ${{ parameters.githubOrg }}
+          orgName: ${{ parameters.orgName }}
           repoName: ${{ parameters.repoName }}
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
+          cluster: .apps.cluster-lzrsx.sandbox1850.opentlc.com
           applicationType: api
           description: ${{ parameters.description }}
           namespace: ${{ parameters.namespace }}
@@ -190,15 +217,17 @@ spec:
           ci: ${{ parameters.ci }}
           groupId: ${{ parameters.groupId }}
           artifactId: ${{ parameters.artifactId }}
-          javaPackageName: ${{ parameters.javaPackageName }}
+          javaPackage: ${{ parameters.javaPackage }}
+          host: ${{ parameters.repo.host }}
+          destination: ${{ parameters.repo.owner }}/${{ parameters.componentId }}
+          sourceControl: gitlab.com
 
     - id: publish
       name: Publishing to the Source Code Repository
-      action: publish:github
+      action: publish:gitlab
       input:
-        allowedHosts: ['github.com']
-        description: ${{ parameters.description }}
-        repoUrl: github.com?owner=${{ parameters.githubOrg }}&repo=${{ parameters.repoName }}
+        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.componentId}}"
+        repoVisibility: public
         defaultBranch: main
 
     - id: register
@@ -207,6 +236,53 @@ spec:
       input:
         repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
         catalogInfoPath: /catalog-info.yaml
+
+    - id: template-gitops-deployment
+      name: Generating Deployment Resources
+      action: fetch:template
+      input:
+        url: ../../skeletons/gitops/
+        copyWithoutTemplating: []
+        values:
+          orgName: ${{ parameters.orgName }}
+          repoName: ${{ parameters.repoName }}
+          component_id: ${{ parameters.componentId }}
+          description: ${{ parameters.description }}
+          destination: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.componentId}}-gitops.git
+          source_repository: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.componentId}}.git
+          repository_name: ${{parameters.componentId}}
+          git_owner: ${{ parameters.repo.owner }}
+          cluster: .apps.cluster-lzrsx.sandbox1850.opentlc.com
+          namespace: ${{ parameters.namespace }}
+          imageBuilder: s2i-java
+          imageUrl: ${{ parameters.imageUrl }}
+          imageRepository: ${{ parameters.imageRepository }}
+          port: 8080
+          repository_host: ${{ parameters.repo.host }}
+          deployment_name: spring-boot-template
+          user: ${{ user.entity.metadata.name }}
+          host: ${{ parameters.repo.host }}
+        targetPath: ./tenant-gitops
+
+    - id: publish-gitops
+      name: Publishing to Resource Repository
+      action: publish:gitlab
+      input:
+        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.componentId}}-gitops"
+        title: gitops resources for ${{ parameters.componentId }}
+        description: gitops resources for ${{ parameters.componentId }}
+        sourcePath: ./tenant-gitops
+        repoVisibility: public
+
+    - id: create-argocd-resources
+      name: Create ArgoCD Resources
+      action: argocd:create-resources
+      input:
+        appName: ${{ parameters.componentId }}-bootstrap
+        argoInstance: main
+        namespace: janus-argocd
+        repoUrl: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{ parameters.componentId }}-gitops.git
+        path: 'argocd/'
 
   output:
     links:
