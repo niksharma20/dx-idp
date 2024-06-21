@@ -13,6 +13,8 @@ DevSpaces as Browser based IDE
 # Plugins  
 [Red Hat plugin for Developer Hub](https://docs.redhat.com/en/documentation/red_hat_plug-ins_for_backstage/2.0)  
 
-# References
+# References  
 [getting started with backstage](https://piotrminkowski.com/2024/06/13/getting-started-with-backstage/)  
-[adding your template](https://backstage.io/docs/features/software-templates/adding-templates)
+[rhdh-build-an-idp](https://github.com/pittar-demos/rhdh-build-an-idp)  
+[adding your template](https://backstage.io/docs/features/software-templates/adding-templates)  
+[Red Hat Develope Hub](https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.1)  
