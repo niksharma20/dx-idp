@@ -15,6 +15,8 @@ All these parameters are then used during code generation. If you would like to 
 
 ## steps
 This section in the manifest defines the actions required to create a new app in Developer Hub.
-1. We need to generate the spring boot app source by filling the template inside the skeleton directory with the parameters defined in the manifest, by calling fetch:template action.
-2. Then we publish the generated code in the newly created gitlab repo by calling the publish:gitlab action
-3. We register the new componenet in the Backstage catalog by calling the catalog:register action.
+1. Generating the Source Code Component | action: fetch:template
+We need to generate the spring boot app source by filling the template inside the skeleton directory with the parameters defined in the manifest, by calling fetch:template action.
+2. 
+3. Then we publish the generated code in the newly created gitlab repo by calling the publish:gitlab action
+4. We register the new componenet in the Backstage catalog by calling the catalog:register action.
