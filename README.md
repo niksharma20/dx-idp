@@ -11,4 +11,4 @@ DevSpaces as Browser based IDE
 
 # References
 [getting started with backstage](https://piotrminkowski.com/2024/06/13/getting-started-with-backstage/)
-
+[adding your template](https://backstage.io/docs/features/software-templates/adding-templates)
