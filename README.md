@@ -5,6 +5,6 @@ During the course we will be deployiong GPT (Golden Path Template) for Spring Bo
  
 # Tech Stack
 Openshift Gitops  
-Openshift Pipelines
-GitLab for Authentication and as Git Repositery
-DevSpaces as Browser based IDE
+Openshift Pipelines  
+GitLab for Authentication and as Git Repositery  
+DevSpaces as Browser based IDE  
