@@ -5,4 +5,4 @@
 The Tekton CI Method will requires some steps before you are able to run
 
 - Add Quay.io credentials as a secret
-- Setup a GitHub webhook for push events
+- Setup a Gitlab webhook for push events
