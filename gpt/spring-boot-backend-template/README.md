@@ -1,6 +1,8 @@
 # Spring Boot Template
 This repository contains the Backstage Template used to create the openshift resources needed to build/deploy a simple springboot application.
 
+# Spring Boot App can be found skeleton directory
+
 # Template Manifest:template.yaml
 
 This is most important element in this repository. 
