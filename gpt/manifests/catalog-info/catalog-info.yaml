@@ -19,6 +19,12 @@ metadata:
     backstage.io/kubernetes-id: ${{ values.repoName }}
     backstage.io/techdocs-ref: dir:.
     github.com/project-slug: ${{ values.githubOrg }}/${{ values.repoName }}
+  tags:
+    - java
+  links:
+    - url: https://devspaces${{values.cluster}}/#https://${{values.host}}/${{values.destination}}
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
 spec:
   type: ${{ values.applicationType }}
   system: ${{ values.system }}
