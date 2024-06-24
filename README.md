@@ -7,7 +7,7 @@ During the course we will be deployiong GPT (Golden Path Template) for Spring Bo
 Openshift Gitops  
 Openshift Pipelines   <code style="color : grey">jenkins flavour to be added later</code>  
 GitLab for Authentication and as Git Repositery  
-DevSpaces as Browser based IDE  <code style="color : grey">catalog-info.yaml needs to be updated</code>
+DevSpaces as Browser based IDE  <code style="color : grey">catalog-info.yaml needs to be updated</code>  
 <code style="color : grey">Sonarqube to be added later</code>  
 
 # Plugins  
