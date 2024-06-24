@@ -18,3 +18,4 @@ DevSpaces as Browser based IDE
 [rhdh-build-an-idp](https://github.com/pittar-demos/rhdh-build-an-idp)  
 [adding your template](https://backstage.io/docs/features/software-templates/adding-templates)  
 [Red Hat Develope Hub](https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.1)  
+[spring boot stssc template](https://github.com/burrsutter/spring-boot-stssc-template/tree/main)
