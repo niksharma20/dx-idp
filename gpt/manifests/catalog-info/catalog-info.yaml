@@ -18,7 +18,7 @@ metadata:
     {%- endif %}
     backstage.io/kubernetes-id: ${{ values.repoName }}
     backstage.io/techdocs-ref: dir:.
-    github.com/project-slug: ${{ values.githubOrg }}/${{ values.repoName }}
+    gitlab.com/project-slug: ${{ values.gitlab }}/${{ values.repoName }}
   tags:
     - java
   links:
