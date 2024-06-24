@@ -1,2 +1,2 @@
-# Reference configmaps and secrets for setting Backstage
+# Sample configmaps and secrets for references
 
