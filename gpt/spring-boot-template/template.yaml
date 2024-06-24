@@ -142,9 +142,9 @@ spec:
               title: Repo Owner
               type: string
               description: Your SCM host organization/group
-              default: development
+              default: nikhshar
               enum:
-                - development
+                - nikhshar
  # here's the steps that are executed in series in the scaffolder backend
   steps:
     - id: sourceCodeTemplate
