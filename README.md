@@ -1,3 +1,5 @@
+# This is still under construction, as currently there are a few issues, that  I have noticed.
+
 # Buidling the Developer Experience Using Red Hat Developer Hub (Backstage) 
 
 This setup will walk through the steps of deploying and customizing your own Internal Developer Portal (IDP) using Red Hat Developer Hub.
