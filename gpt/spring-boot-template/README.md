@@ -1,6 +1,6 @@
 # Spring Boot Template
 This repository contains the Backstage Template used to create the openshift resources needed to build/deploy a simple springboot application.
-# [Devfile reference](https://github.com/burrsutter/spring-boot-stssc-template/blob/main/skeleton/.devfile.yaml)
+
 # Spring Boot App can be found skeleton directory
 
 # Template Manifest:template.yaml
