@@ -1,4 +1,4 @@
-# This is still under construction, as currently there are a few issues, that  I have noticed.
+# <code style="color : red">This is still under construction, as currently there are a few issues, that  I have noticed.</code>
 
 # Buidling the Developer Experience Using Red Hat Developer Hub (Backstage) 
 
