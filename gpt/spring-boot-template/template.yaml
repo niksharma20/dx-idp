@@ -2,9 +2,9 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 # some metadata about the template itself
 metadata:
-  name: Create a Spring Boot app and publish gitlab
-  title: Create a Spring Boot app and publish gitlab
-  description: Create a Spring Boot app and publish gitlab
+  name: spring-boot-on-openshift-template
+  title: Create a Spring Boot app and deploy it on OpenShift with a CI/CD pipeline
+  description: Create a Spring Boot app and deploy it on OpenShift with a CI/CD pipeline
   tags:
     - recommended
     - spring-boot
@@ -90,9 +90,9 @@ spec:
           title: Select a CI method
           type: string
           description: This action will create a CI pipeline for your application based on chosen method
-          default: ../../skeletons/ci/tekton/
+          default: ../manifests/ci/tekton/
           enum:
-            - ../../skeletons/ci/tekton/
+            - ../manifests/ci/tekton/
           enumNames:
             - Tekton
       dependencies:
@@ -104,7 +104,7 @@ spec:
                 - imageUrl
               properties:
                 ci:
-                  const: ../../skeletons/ci/tekton/
+                  const: ../manifests/ci/tekton/
                 imageRepository:
                   title: Select a registry
                   type: string
@@ -200,7 +200,7 @@ spec:
       name: Generating the Catalog Info Component
       action: fetch:template
       input:
-        url: ../../skeletons/catalog-info/
+        url: ../manifests/catalog-info
         values:
           orgName: ${{ parameters.orgName }}
           repoName: ${{ parameters.repoName }}
@@ -242,7 +242,7 @@ spec:
       name: Generating Deployment Resources
       action: fetch:template
       input:
-        url: ../../skeletons/gitops/
+        url: ../manifests/gitops/
         copyWithoutTemplating: []
         values:
           orgName: ${{ parameters.orgName }}
@@ -250,7 +250,7 @@ spec:
           component_id: ${{ parameters.componentId }}
           description: ${{ parameters.description }}
           destination: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.componentId}}-gitops.git
-          source_repository: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{ parameters.componentId }}.git
+          source_repository: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.componentId}}.git
           repository_name: ${{parameters.componentId}}
           git_owner: ${{ parameters.repo.owner }}
           cluster: .apps.cluster-lzrsx.sandbox1850.opentlc.com
@@ -269,7 +269,7 @@ spec:
       name: Publishing to Resource Repository
       action: publish:gitlab
       input:
-        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{ parameters.componentId }}-gitops"
+        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.componentId}}-gitops"
         title: gitops resources for ${{ parameters.componentId }}
         description: gitops resources for ${{ parameters.componentId }}
         sourcePath: ./tenant-gitops
