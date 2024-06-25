@@ -226,7 +226,8 @@ spec:
       name: Publishing to the Source Code Repository
       action: publish:gitlab
       input:
-        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.componentId}}"
+        allowedHosts: ["${{ parameters.repo.host }}"]
+        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{ parameters.componentId }}"
         repoVisibility: public
         defaultBranch: main
 
@@ -249,7 +250,7 @@ spec:
           component_id: ${{ parameters.componentId }}
           description: ${{ parameters.description }}
           destination: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.componentId}}-gitops.git
-          source_repository: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.componentId}}.git
+          source_repository: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{ parameters.componentId }}.git
           repository_name: ${{parameters.componentId}}
           git_owner: ${{ parameters.repo.owner }}
           cluster: .apps.cluster-lzrsx.sandbox1850.opentlc.com
@@ -268,7 +269,7 @@ spec:
       name: Publishing to Resource Repository
       action: publish:gitlab
       input:
-        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.componentId}}-gitops"
+        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{ parameters.componentId }}-gitops"
         title: gitops resources for ${{ parameters.componentId }}
         description: gitops resources for ${{ parameters.componentId }}
         sourcePath: ./tenant-gitops
