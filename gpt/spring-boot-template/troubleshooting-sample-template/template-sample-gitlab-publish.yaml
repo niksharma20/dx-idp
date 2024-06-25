@@ -1,0 +1,41 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: test_publish_content
+  title: Simple Publish Content to Gitlab
+  tags: [rhdh,gitlab]
+spec:
+  owner: nikhshar
+  type: service
+  parameters:
+    - title: Repo Data
+      required: [ owner, repoName ]
+      properties:
+        owner:
+          title: Owner
+          type: string
+          default: nikhshar
+        repoName:
+          title: Repo Name
+          type: string
+          default: test-template       
+  steps:
+    - id: fetch-file
+      name: Fetch a simple file
+      action: fetch:plain:file
+      input:
+        url: https://gitlab.com/demo-myself1/dx-idp/-/blob/main/gpt/spring-boot-template/skeleton/README.md
+        targetPath: ./README.md
+    - id: publish
+      name: Publishing the content to gitlab
+      action: publish:gitlab
+      input:
+        allowedHosts: ["gitlab.com"]
+        description: Testing publish content on gitlab
+        repoUrl: gitlab.com?owner=${{ parameters.owner }}&repo=${{ parameters.repoName }}
+
+  output:
+    links:
+      - title: Repo URL
+        url: ${{ steps.publish.output.remoteUrl }}
+        text: "Repo URL"
