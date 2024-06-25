@@ -2,9 +2,9 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 # some metadata about the template itself
 metadata:
-  name: spring-boot-on-openshift-template
-  title: Create a Spring Boot app and deploy it on OpenShift with a CI/CD pipeline
-  description: Create a Spring Boot app and deploy it on OpenShift with a CI/CD pipeline
+  name: Create a Spring Boot app and publish gitlab
+  title: Create a Spring Boot app and publish gitlab
+  description: Create a Spring Boot app and publish gitlab
   tags:
     - recommended
     - spring-boot
