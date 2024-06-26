@@ -27,7 +27,7 @@ Then we publish the generated code in the newly created gitlab repo by calling t
 We need to generate the catalog-info.yaml by filling the template inside skeleton directory (../skeleton/catalog-info) with the parameters defined in the manifest, by calling fetch:template action.  
 <code style="color : grey">**Refer**</code> [02_template-catalog-info-devspaces.yaml](troubleshooting-sample-template/02_template-catalog-info-devspaces.yaml)  
 4. **Registering the Catalog Info Component | _action: catalog:register_**  
-We register the new componenet in the Backstage catalog by calling the catalog:register action.
+We register the new componenet in the Backstage catalog by calling the catalog:register action.  
 <code style="color : grey">**Refer**</code> [02_template-catalog-info-devspaces.yaml](troubleshooting-sample-template/02_template-catalog-info-devspaces.yaml)  
 5. **Generating the CI Component| _action: fetch:template_**  
 We need to generate the CI componenets by filling the template inside skeleton directory (../skeleton/ci/tekton) with the parameters defined in the manifest, by calling fetch:template action.  
