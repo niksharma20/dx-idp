@@ -20,8 +20,8 @@ This section in the manifest defines the actions required to create a new app in
 1. **Generating the Source Code Component | _action: fetch:template_**  
 We need to generate the spring boot app source by filling the template inside the skeleton directory with the parameters defined in the manifest, by calling fetch:template action.
 2. **Publishing to the Source Code Repository | _action: publish:gitlab_**  
-Then we publish the generated code in the newly created gitlab repo by calling the publish:gitlab action
-[01_template-source-code-git-publish.yaml](troubleshooting-sample-template/01_template-source-code-git-publish.yaml)
+Then we publish the generated code in the newly created gitlab repo by calling the publish:gitlab action  
+<code style="color : grey">**Refer**</code> [01_template-source-code-git-publish.yaml](troubleshooting-sample-template/01_template-source-code-git-publish.yaml)  
 4. **Generating the Catalog Info Component | _action: fetch:template_**  
 We need to generate the catalog-info.yaml by filling the template inside skeleton directory (../skeleton/catalog-info) with the parameters defined in the manifest, by calling fetch:template action.
 5. **Registering the Catalog Info Component | _action: catalog:register_**  
