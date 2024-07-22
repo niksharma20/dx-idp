@@ -11,6 +11,7 @@ Openshift Pipelines   <code style="color : grey">jenkins flavour to be added lat
 GitLab for Authentication and as Git Repositery  
 DevSpaces as Browser based IDE  
 <code style="color : grey">Sonarqube to be added later</code>  
+<code style="color : grey">SBOM to be added later</code>  
 
 # Plugins  
 [Red Hat plugin for Developer Hub](https://docs.redhat.com/en/documentation/red_hat_plug-ins_for_backstage/2.0)  
