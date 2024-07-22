@@ -5,13 +5,13 @@
 This setup will walk through the steps of deploying and customizing your own Internal Developer Portal (IDP) using Red Hat Developer Hub.
 During the course we will be deployiong GPT (Golden Path Template) for Spring Boot to Build and Deploy on Openshift.
  
-# Tech Stack
+# GPT Tech Stack
 Openshift Gitops  
 Openshift Pipelines   <code style="color : grey">jenkins flavour to be added later</code>  
 GitLab for Authentication and as Git Repositery  
 DevSpaces as Browser based IDE  
-<code style="color : grey">Sonarqube to be added later</code>  
-<code style="color : grey">SBOM to be added later</code>  
+<code style="color : grey">Sonarqube - **coming soon** </code>  
+<code style="color : grey">adding an SBOM to your GPT - **coming soon** </code>  
 
 # Plugins  
 [Red Hat plugin for Developer Hub](https://docs.redhat.com/en/documentation/red_hat_plug-ins_for_backstage/2.0)  
